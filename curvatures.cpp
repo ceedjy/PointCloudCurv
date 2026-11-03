@@ -6,6 +6,7 @@
 #include "PointCloudCurvatureComputer.h"
 #include "RegularPolyhedron.h"
 #include "Helpers.h"
+#include "filter.cpp"
 
 typedef Eigen::VectorXd  DenseVector;
 typedef Eigen::MatrixXd  DenseMatrix;
@@ -485,6 +486,7 @@ void doGenerateFromFile()
   input.close();
   points = hausdorffPerturbation( obj_points, epsilon );
   point_normals = uniformNormalPerturbation( obj_normals, xi );  
+  points = filterNaive(points, 10, 2.0);
   if ( ptCloud != nullptr )
     polyscope::removePointCloud( "point cloud" );
   std::cout << "Build k-d-tree ..." << std::endl;
