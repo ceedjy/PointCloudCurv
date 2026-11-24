@@ -66,7 +66,7 @@ The goal is to separate line to facilitate futur computations.
 
 |![before](images/readme/cutLinesBefore.png) | ![after1](images/readme/cutLines7-all.png) | ![after2](images/readme/cutLines4-2_1.png) | ![after3](images/readme/cutLines4-2_2.png) | ![after4](images/readme/cutLines4-5.png) |
 | ---- | ---- | ---- | ---- | ---- |
-| Before (no changes) | After : delta = 7, focus on all datas (each color is a line) | After : delta = 4, focus on 2 lines |After : delta = 4, focus on 2 lines | After : delta = 4, focus on the first 5 lines (we can see really small lines in pink, blue and yellow) | 
+| Before (no changes) | After : delta = 7, 4489 lines found, focus on all datas (each color is a line) | After : delta = 4, 7010 lines found, focus on 2 lines | After : delta = 4, 7010 lines found, focus on 2 lines | After : delta = 4, 7010 lines found, focus on the first 5 lines (we can see really small lines in pink, blue and yellow) | 
 
 <u>**Pros :**</u>
 - It's working
@@ -78,6 +78,6 @@ The goal is to separate line to facilitate futur computations.
 - Can be hard to display with all lines as point cloud 
 
 <u>**Conclusion :**</u>  
-This cut in data will be useful and used in futur computation. 
+These cuts in data will be useful and used in futur computation.
 
 ### Other methods in progress ... 
