@@ -57,4 +57,27 @@ The goal of this first filter is to erase isolated outliers.
 <u>**Conclusion :**</u>  
 This version is not robust enough to give it serious consideration. 
 
+### Cut data in lines :
+To separate data as effectively as possible, I cut data in LiDAR lines. This function read all data points in the order they appear in the tab. For each read point, I calculate the distance between this point and the next one. If a distance between 2 point is greater than the mean distance for this line multiply by delta, then this means we changed line. The line previously read is stocked as a line, and we continue until the end of all points.
+Then, to display all line, we create multiple point cloud we are displaying in space. Each point cloud have its own color.  
+The goal is to separate line to facilitate futur computations.  
+
+<u>**Results :**</u>  
+
+|![before](images/readme/cutLinesBefore.png) | ![after1](images/readme/cutLines7-all.png) | ![after2](images/readme/cutLines4-2_1.png) | ![after3](images/readme/cutLines4-2_2.png) | ![after4](images/readme/cutLines4-5.png) |
+| ---- | ---- | ---- | ---- | ---- |
+| Before (no changes) | After : delta = 7, focus on all datas (each color is a line) | After : delta = 4, focus on 2 lines |After : delta = 4, focus on 2 lines | After : delta = 4, focus on the first 5 lines (we can see really small lines in pink, blue and yellow) | 
+
+<u>**Pros :**</u>
+- It's working
+- Lines are well cut
+- Quite fast
+
+<u>**Cons :**</u>
+- Can create really small lines, depending of the choosen delta (see fifth image)
+- Can be hard to display with all lines as point cloud 
+
+<u>**Conclusion :**</u>  
+This cut in data will be useful and used in futur computation. 
+
 ### Other methods in progress ... 
