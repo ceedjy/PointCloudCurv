@@ -472,6 +472,7 @@ void doGenerateTorus()
 
 void doGenerateFromFile()
 {
+  int choice = 0;
   ptCloudH  = nullptr;
   ptCloudG  = nullptr;
   ptCloudK1 = nullptr;
@@ -485,19 +486,33 @@ void doGenerateFromFile()
     : readPointCloud<RealPoint,RealVector>     ( input );
   input.close();
   points = hausdorffPerturbation( obj_points, epsilon );
-  point_normals = uniformNormalPerturbation( obj_normals, xi );  
-  points = filterNaive(points, 10, 2.0);
+  point_normals = uniformNormalPerturbation( obj_normals, xi ); 
+  // Choices :
+  if (choice == 1){ // Naive filter
+    points = filterNaive(points, 10, 2.0);
+  } 
   if ( ptCloud != nullptr )
     polyscope::removePointCloud( "point cloud" );
   std::cout << "Build k-d-tree ..." << std::endl;
   ptTree.init( points );
   // visualize!
   std::cout << "register point cloud ..." << std::endl;
-  ptCloud = polyscope::registerPointCloud("point cloud", points);
-  ptCloud->setPointRadius( radius_R / 100.0, false );
-  ptCloud->setPointRenderMode( FastRenderMode
-                               ? polyscope::PointRenderMode::Quad
-                               : polyscope::PointRenderMode::Sphere );
+  if (choice == 2){ // Cut data in lines 
+    std::vector <line> lines = cutInLine(points, 4);
+    for (int j = 0; j < lines.size(); j++){
+      ptCloud = polyscope::registerPointCloud("point cloud " + std::to_string(j), lines[j].points);
+      ptCloud->setPointRadius( radius_R / 100.0, false );
+      ptCloud->setPointRenderMode( FastRenderMode
+                                ? polyscope::PointRenderMode::Quad
+                                : polyscope::PointRenderMode::Sphere );
+    }
+  } else {
+    ptCloud = polyscope::registerPointCloud("point cloud", points);
+    ptCloud->setPointRadius( radius_R / 100.0, false );
+    ptCloud->setPointRenderMode( FastRenderMode
+                                  ? polyscope::PointRenderMode::Quad
+                                  : polyscope::PointRenderMode::Sphere );
+  }
   std::cout << "... done" << std::endl;
   std::tie( lowest, uppest ) = computeBoundingBox( points );
 }
