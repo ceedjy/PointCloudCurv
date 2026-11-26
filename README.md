@@ -16,8 +16,9 @@ This is a summary of what I read or what I plan to read.
 
 | Name | Authors | To read | Reading | Read |
 | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ | 
-| [Advancing Front Surface Reconstruction](https://doc.cgal.org/latest/Advancing_front_surface_reconstruction/index.html) | Tran Kai Frank Da, David Cohen-Steiner | X |  |  |
+| [Advancing Front Surface Reconstruction](https://doc.cgal.org/latest/Advancing_front_surface_reconstruction/index.html) | Tran Kai Frank Da, David Cohen-Steiner |  |  | X |
 | [Algebraic Point Set Surface](https://dl.acm.org/doi/pdf/10.1145/1276377.1276406) | Gael Guennebaud, Markus Gross |  |  | X |
+| [3D Alpha Shape](https://doc.cgal.org/latest/Alpha_shapes_3/index.html) | Tran Kai Frank Da, Sébastien Loriot, Mariette Yvinec |  |  | X |
 | [Cocone](https://dl.acm.org/doi/pdf/10.1145/378583.378682) | Tamal K. Dey, Joachim Giesen | X |  |  |
 | [Dual Contouring](https://dl.acm.org/doi/pdf/10.1145/566570.566586) | Tao Ju, Frank Losasso, Scott Schaefer, Joe Warren |  |  | X |
 | [Efficient Surface Normal Estimation for LiDAR Point Clouds](https://media.eventhosts.cc/Conferences/ECCV2026/pdfs/12046.pdf) | Kohei Matsuzaki, Keisuke Nonaka |  |  | X |
@@ -28,7 +29,7 @@ This is a summary of what I read or what I plan to read.
 | [Point Cloud Normal Estimation via Representation Learning on Height Maps](https://dl.acm.org/doi/pdf/10.1145/3696409.3700185) | Yang Yi & al. | X |  |  |
 | [Poisson Reconstruction](https://www.cse.iitb.ac.in/~cs749/spr2016/handouts/kazhdan_poisson.pdf) | Michael Kazhdan, Matthew Bolitho, Hugues Hoppe |  |  | X |
 | [Robust Cocone](https://dl.acm.org/doi/pdf/10.1145/997817.997867) | Tamal K. Dey, Samrat Goswami | X |  |  |
-| [Scale-Space Surface Reconstruction](https://doc.cgal.org/latest/Scale_space_reconstruction_3/index.html#Chapter_Scale_space_reconstruction) | Thijs van Lankveld | X |  |  |
+| [Scale-Space Surface Reconstruction](https://doc.cgal.org/latest/Scale_space_reconstruction_3/index.html#Chapter_Scale_space_reconstruction) | Thijs van Lankveld |  |  | X |
 | [Super Cocone](https://etd.ohiolink.edu/acprod/odb_etd/ws/send_file/send?accession=osu1732009886712661&disposition=inline) | James Hudson | X |  |  |
 | [Surface Reconstruction from 3D Point Clouds via Geometry-guided Distance Representation](https://openaccess.thecvf.com/content/ICCV2023/papers/Ren_GeoUDF_Surface_Reconstruction_from_3D_Point_Clouds_via_Geometry-guided_Distance_ICCV_2023_paper.pdf) | Siyu Ren & al. | X |  |  |
 | [Surface Reconstruction from Point Cloud using a Semi-Lagrangian Scheme with Local Interpolator](https://link.springer.com/content/pdf/10.1007/s10915-025-02843-y.pdf) | Silvia Preda, Matteo Semplice | X |  |  |
