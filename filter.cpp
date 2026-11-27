@@ -82,6 +82,83 @@ cutInLine( const std::vector< RealPoint >& pts, float delta)
     }
     i++;
   }
-  cout << "Number of lines found : " << output.size() << endl;
+  std::cout << "Number of lines found : " << output.size() << endl;
   return output;
 }
+
+std::vector<cluster>
+kmeanCluster(const std::vector< RealPoint >& pts, int k, int beta){
+  std::vector< cluster > output;
+  std::vector< RealPoint > oneCluster;
+  int size = pts.size();
+
+  // Choose k points in our data set to initialize clusters
+  int startIndex = (int)(size / (k+1)); 
+  for (int j = 1; j < k+1; j++){
+    cluster c;
+    c.barycenter = {pts[startIndex*j][0], pts[startIndex*j][1], pts[startIndex*j][2]};
+    output.push_back(c);
+  }
+
+  // Apply kmean beta times
+  for (int b = 0; b < beta; b++){
+    // initialize all point set in cluster to nothing
+    for (int j = 0; j < k; j++){
+      output[j].points = {};
+    }
+    for ( auto& p : pts ) {
+      // find to which cluster this point belong
+      float minDist = std::numeric_limits<float>::max();
+      int index = 0;
+      for (int j = 0; j < k; j++){
+        float dist = distance(p, output[j].barycenter);
+        if (dist < minDist){
+          minDist = dist;
+          index = j;
+        }
+      }
+      // change the output 
+      output[index].points.push_back(p);
+    }
+    // recalculate barycentre
+    for(int j = 0; j < k; j++){
+      glm::vec3 sum = {0.0, 0.0, 0.0};
+      int nbPtsInvolved = output[j].points.size();
+      for (auto& q : output[j].points){
+        sum = {sum[0] + q[0], sum[1] + q[1], sum[2] + q[2]};
+      }
+      output[j].barycenter = {sum[0]/nbPtsInvolved, sum[1]/nbPtsInvolved, sum[2]/nbPtsInvolved};
+    }
+  }
+
+  // Calculate mean distance between each point and the barycenter 
+  for (int j = 0; j < k; j++){
+    float sum = 0.0f;
+    for (auto& q : output[j].points){
+      sum += distance(q, output[j].barycenter);
+    }
+    output[j].size = output[j].points.size();
+    output[j].meanDist = sum/output[j].size;
+  }
+
+  return output;
+}
+
+std::vector<cluster> 
+kmeanFilter(const std::vector< RealPoint >& pts, int k, int beta, float delta){
+  std::vector<cluster> output = kmeanCluster(pts, k, beta);
+  // get rid of outliers
+  for(int j = 0; j < k; j++){
+    std::vector<RealPoint> newPoints = {};
+    for (auto& q : output[j].points){
+      float dist = distance(q, output[j].barycenter);
+      if(dist <= output[j].meanDist*delta){
+        newPoints.push_back(q);
+      }
+    }
+    output[j].points = newPoints;
+  }
+  return output;
+}
+
+// todo : parallélister là ou on faire des trucs séparément par cluster

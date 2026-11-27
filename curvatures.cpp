@@ -506,6 +506,15 @@ void doGenerateFromFile()
                                 ? polyscope::PointRenderMode::Quad
                                 : polyscope::PointRenderMode::Sphere );
     }
+  } else if (choice == 3){
+    std::vector <cluster> clusters = kmeanFilter(points, 400, 15, 2.0f);
+    for (int j = 0; j < clusters.size(); j++){
+      ptCloud = polyscope::registerPointCloud("point cloud " + std::to_string(j), clusters[j].points);
+      ptCloud->setPointRadius( radius_R / 100.0, false );
+      ptCloud->setPointRenderMode( FastRenderMode
+                                ? polyscope::PointRenderMode::Quad
+                                : polyscope::PointRenderMode::Sphere );
+    }
   } else {
     ptCloud = polyscope::registerPointCloud("point cloud", points);
     ptCloud->setPointRadius( radius_R / 100.0, false );
