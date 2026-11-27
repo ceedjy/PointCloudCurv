@@ -58,8 +58,8 @@ The goal of this first filter is to erase isolated outliers.
 <u>**Conclusion :**</u>  
 This version is not robust enough to give it serious consideration. 
 
-### Cut data in lines :
-To separate data as effectively as possible, I cut data in LiDAR lines. This function read all data points in the order they appear in the tab. For each read point, I calculate the distance between this point and the next one. If a distance between 2 point is greater than the mean distance for this line multiply by delta, then this means we changed line. The line previously read is stocked as a line, and we continue until the end of all points.
+### Split data in lines :
+To separate data as effectively as possible, I split data in LiDAR lines. This function read all data points in the order they appear in the tab. For each read point, I calculate the distance between this point and the next one. If a distance between 2 point is greater than the mean distance for this line multiply by delta, then this means we changed line. The line previously read is stocked as a line, and we continue until the end of all points.
 Then, to display all line, we create multiple point cloud we are displaying in space. Each point cloud have its own color.  
 The goal is to separate line to facilitate futur computations.  
 
@@ -70,7 +70,6 @@ The goal is to separate line to facilitate futur computations.
 | Before (no changes) | After : delta = 7, 4489 lines found, focus on all datas (each color is a line) | After : delta = 4, 7010 lines found, focus on 2 lines | After : delta = 4, 7010 lines found, focus on 2 lines | After : delta = 4, 7010 lines found, focus on the first 5 lines (we can see really small lines in pink, blue and yellow) | 
 
 <u>**Pros :**</u>
-- It's working
 - Lines are well cut
 - Quite fast
 
@@ -79,6 +78,50 @@ The goal is to separate line to facilitate futur computations.
 - Can be hard to display with all lines as point cloud 
 
 <u>**Conclusion :**</u>  
-These cuts in data will be useful and used in futur computation.
+These splits in data will be useful and used in futur computation.
+
+### Split data in clusters :
+To again separate data as effectively as possible, I split data in clusters. To split in cluster, we use the algorithm **Kmean**. This algorithm first choose k points in our data set to initialize clusters. Then it apply Kmean algorithm few times (calculate barycenter, find wich is the closest barycenter for each point). Afterwards, it calculate, for each cluster, the mean distance between the barycenter and each point of the cluster. The number of clusters and the number of times kmean is applyed are decided by the user.   
+Then, to display all clusters, we create multiple point cloud we are displaying in space. Each point cloud have its own color.  
+The goal is to separate data into clusters to facilitate futur computations (parallelisation for exemple).  
+
+<u>**Results :**</u>  
+
+|![before](images/readme/cutClusterBefore.png) | ![after1](images/readme/cutCluster100-15.png) | ![after2](images/readme/cutCluster400-15.png) | 
+| ---- | ---- | ---- | 
+| Before (no changes) | After : k = 100, beta = 15 (each color is a cluster) | After : k = 400, beta = 15 (each color is a cluster) |
+
+<u>**Pros :**</u>
+- Clusters are well cut
+- No missing data or weird cluster
+
+<u>**Cons :**</u>
+- Need parallelisation to be really fast if many clusters are computed
+- Need to choose settings wisely 
+
+<u>**Conclusion :**</u>  
+These splits in data will be useful and used in futur computation.
+
+### Cluster Filter 
+This filter is the naive filter applyed on each cluster. The 'average point' is the barycenter of the cluster. We know the mean distance between this barycenter and each point of the cluster. If a point is too far from the barycenter, it's considered as an outlier and it's erased from point set. The number of clusters, the number of times kmean is applyed, and the maximum accepted distance are decided by the user.  
+The goal is to erase isolated outliers.  
+
+<u>**Results :**</u>  
+
+|![before](images/readme/clusterFilterBefore.png) | ![after1](images/readme/clusterFilter300-15-2.png) | ![after2](images/readme/clusterFilter300-15-18.png) | ![after3](images/readme/clusterFilter300-15-18-2.png) | ![after4](images/readme/clusterFilter400-15-2.png) | ![after5](images/readme/clusterFilter400-15-2-2.png) | 
+| ---- | ---- | ---- | ---- | ---- | ---- | 
+| Before (no changes) | After : k = 300, beta = 15, delta = 2.0 | After : k = 300, beta = 15, delta = 1.8, focus on all data (we can see it erase non-outliers point, wich create a "bubble" effet around barycenters) | After : k = 300, beta = 15, delta = 1.8 | After : k = 400, beta = 15, delta = 2.0, focus on all data | After : k = 300, beta = 15, delta = 1.8 |
+
+<u>**Pros :**</u>
+- Erase isolated outliers
+- Finding neighbour technique is more efficient, therefore it's more robust than naive filter
+- Can be parallelized to be faster
+
+<u>**Cons :**</u>
+- Can erase non-outliers points (see third image with the "bubble" effect)
+- Need to choose settings wisely 
+
+<u>**Conclusion :**</u>  
+This filter is working and is interesting. Can be even faster if parallelized. Still not perfect tho.
 
 ### Other methods in progress ... 

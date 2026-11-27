@@ -472,7 +472,7 @@ void doGenerateTorus()
 
 void doGenerateFromFile()
 {
-  int choice = 3;
+  int choice = 0;
   ptCloudH  = nullptr;
   ptCloudG  = nullptr;
   ptCloudK1 = nullptr;
