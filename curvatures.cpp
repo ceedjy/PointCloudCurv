@@ -472,7 +472,7 @@ void doGenerateTorus()
 
 void doGenerateFromFile()
 {
-  int choice = 0;
+  int choice = 3;
   ptCloudH  = nullptr;
   ptCloudG  = nullptr;
   ptCloudK1 = nullptr;
@@ -501,6 +501,15 @@ void doGenerateFromFile()
     std::vector <line> lines = cutInLine(points, 4);
     for (int j = 0; j < lines.size(); j++){
       ptCloud = polyscope::registerPointCloud("point cloud " + std::to_string(j), lines[j].points);
+      ptCloud->setPointRadius( radius_R / 100.0, false );
+      ptCloud->setPointRenderMode( FastRenderMode
+                                ? polyscope::PointRenderMode::Quad
+                                : polyscope::PointRenderMode::Sphere );
+    }
+  } else if (choice == 3){
+    std::vector <cluster> clusters = kmeanFilter(points, 400, 15, 2.0f);
+    for (int j = 0; j < clusters.size(); j++){
+      ptCloud = polyscope::registerPointCloud("point cloud " + std::to_string(j), clusters[j].points);
       ptCloud->setPointRadius( radius_R / 100.0, false );
       ptCloud->setPointRenderMode( FastRenderMode
                                 ? polyscope::PointRenderMode::Quad
